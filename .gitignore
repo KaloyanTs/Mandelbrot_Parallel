@@ -2,3 +2,8 @@ build/
 old_projects/
 .vscode/
 *lock*
+documentation/
+!documentation/*.odt
+!documentation/*.tex
+!documentation/*.pdf
+!documentation/*.doc*
