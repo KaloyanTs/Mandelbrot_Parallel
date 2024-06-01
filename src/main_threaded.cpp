@@ -6,6 +6,8 @@
 #include <atomic>
 #include <vector>
 #include <thread>
+#include <algorithm>
+#include <cstring>
 #include "util.h"
 
 void renderChunk(std::vector<unsigned char> &pixels,
@@ -22,7 +24,7 @@ void renderChunk(std::vector<unsigned char> &pixels,
         {
             float newX = (float)(x) / (WIDTH) * 2 * boundX - boundX;
             float newY = (float)(y) / (HEIGHT) * 2 * boundY - boundY;
-            int reps = inSet(newX / ZOOM + centerX, newY / ZOOM + centerY);
+            int reps = inSet(newX / ZOOM + CENTER_X, newY / ZOOM + CENTER_Y);
             float coeff = (float)reps / ITER;
             coeff = pow(coeff, 0.2);
             if (coeff < 0.4)
@@ -37,7 +39,11 @@ void renderChunk(std::vector<unsigned char> &pixels,
             // todo repair...not working properly!!!!!
             // todo use struct
             // setPink(pixels, x, y, coeff);
-            setChecked(pixels, x, y, coeff, 0x00000000, 0x00ffffff);
+            int index = (y * WIDTH + x) * 3;
+            pixels[index] = static_cast<unsigned char>(200 * coeff);
+            pixels[index + 1] = static_cast<unsigned char>(130 * coeff);
+            pixels[index + 2] = static_cast<unsigned char>(35 * coeff);
+            // setChecked(pixels, x, y, coeff, 0x00000000, 0x00ffffff);
         }
     }
 }
@@ -88,8 +94,8 @@ void saveToPPM()
     glfwGetFramebufferSize(glfwGetCurrentContext(), &width, &height);
 
     // Print the PPM header
-    std::cout << "P6\n"
-              << width << " " << height << "\n255\n";
+    out << "P6\n"
+        << width << " " << height << "\n255\n";
 
     for (int y = height - 1; y >= 0; y--)
     {
@@ -97,13 +103,52 @@ void saveToPPM()
         {
             unsigned char pixel[3];
             glReadPixels(x, y, 1, 1, GL_RGB, GL_UNSIGNED_BYTE, pixel);
-            std::cout.write(reinterpret_cast<const char *>(pixel), 3);
+            out.write(reinterpret_cast<const char *>(pixel), 3);
         }
     }
 }
 
-int main()
+const std::string SIZE_PARAM = "-s";
+const std::string OUTPUT_PARAM = "-o";
+const std::string BOUNDS_PARAM = "-r";
+
+int main(int argc, char **argv)
 {
+
+    for (int i = 1; i < argc - argc % 2; i += 2)
+    {
+        std::cout << argv[i] << '|' << '\n';
+        std::string s = argv[i];
+        if (SIZE_PARAM == s)
+        {
+            char *mid = strchr(argv[i + 1], 'x');
+            if (!mid)
+                return 1;
+            *mid = 0;
+            WIDTH = atoi(argv[i + 1]);
+            HEIGHT = atoi(mid + 1);
+            RATIO_HW = HEIGHT / WIDTH;
+        }
+        else if (OUTPUT_PARAM == s)
+        {
+            out = std::ofstream(argv[i + 1], std::ios::out);
+        }
+        else if (OUTPUT_PARAM == BOUNDS_PARAM)
+        {
+            char *p = strchr(argv[i + 1], ':'), *q;
+            *p = 0, q = p + 1, p = strchr(q, ':');
+            MIN_X = std::stof(argv[i + 1]);
+            *p = 0, q = p + 1, p = strchr(q, ':');
+            MAX_X = std::stof(argv[i + 1]);
+            *p = 0, q = p + 1, p = strchr(q, ':');
+            MIN_Y = std::stof(argv[i + 1]);
+            *p = 0, q = p + 1, p = strchr(q, ':');
+            MAX_Y = std::stof(argv[i + 1]);
+            CENTER_X = (MIN_X + MAX_X) / 2;
+            CENTER_Y = (MIN_Y + MAX_Y) / 2;
+        }
+    }
+
     if (!glfwInit())
         return -1;
 
@@ -130,5 +175,6 @@ int main()
     saveToPPM();
 
     glfwTerminate();
+    out.close();
     return 0;
 }

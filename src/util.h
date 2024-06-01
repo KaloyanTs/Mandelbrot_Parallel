@@ -2,20 +2,26 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 #include <algorithm>
+#include <fstream>
 #include <cmath>
 
 #define PINK 0x00ff80d5
 
-const int WIDTH = 512;
-const int HEIGHT = 270;
-const float ratioHW = (float)HEIGHT / WIDTH;
-const float centerX = -1.30f;
-const float centerY = 0.072f;
-const float ZOOM = 50;
-const int ITER = 10000;
+int WIDTH = 512;
+int HEIGHT = 270;
+float RATIO_HW = (float)HEIGHT / WIDTH;
+float MIN_X = -2.0f;
+float MAX_X = 2.0f;
+float MIN_Y = -2.0f;
+float MAX_Y = 2.0f;
+float CENTER_X = -1.30f;
+float CENTER_Y = 0.072f;
+float ZOOM = 50;
+int ITER = 10000;
+std::ofstream out("../results/default.ppm", std::ofstream::out);
 
-float boundX = std::max(1.0f, 1 / ratioHW);
-float boundY = std::max(1.0f, ratioHW);
+float boundX = std::max(1.0f, 1 / RATIO_HW);
+float boundY = std::max(1.0f, RATIO_HW);
 
 std::mutex mtx;
 std::atomic<double> progress(0);
