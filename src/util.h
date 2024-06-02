@@ -10,15 +10,16 @@
 int WIDTH = 512;
 int HEIGHT = 270;
 float RATIO_HW = (float)HEIGHT / WIDTH;
-float MIN_X = -2.0f;
-float MAX_X = 2.0f;
-float MIN_Y = -2.0f;
-float MAX_Y = 2.0f;
-float CENTER_X = -1.30f;
-float CENTER_Y = 0.072f;
-float RADIUS = 0.02f;
+// float CENTER_X = -1.30f;
+// float CENTER_Y = 0.072f;
+float CENTER_X = -0.4f;
+float CENTER_Y = 0.0f;
+// float RADIUS = 0.02f;
+float RADIUS = 1.0f;
 int NUM_THREADS = std::thread::hardware_concurrency();
 int ITER = 10000;
+int GRANULARITY = 1;
+float auxCoeff = 1.0f / ITER;
 
 float boundX = std::max(1.0f, 1 / RATIO_HW);
 float boundY = std::max(1.0f, RATIO_HW);
@@ -36,8 +37,11 @@ std::string OUTPUT_DEFAULT_FILE = "../results/default.ppm";
 std::string STATS_DEFAULT_FILE = "../stats/" + getCurrentDayMonthString() + ".csv";
 std::ofstream out(OUTPUT_DEFAULT_FILE, std::ofstream::out);
 
-std::mutex mtx;
-std::atomic<double> progress(0);
+const std::string SIZE_PARAM = "-s";
+const std::string OUTPUT_PARAM = "-o";
+const std::string BOUNDS_PARAM = "-c";
+const std::string THREADS_PARAM = "-t";
+const std::string GRANULARITY_PARAM = "-g";
 
 struct RGB
 {
@@ -88,13 +92,19 @@ void setChecked(std::vector<unsigned char> &pixels, int x, int y, float coeff, R
     RGB color(0, 0, 0);
     if (coeff < 1.0f)
     {
-        color = RGB(0xff, 0xff, 0xff);
+        coeff=pow(coeff, 0.3);
+        color = RGB(0xff, 0xff, 0x00);
+        int index = (y * WIDTH + x) * 3;
+        pixels[index] = static_cast<unsigned char>(coeff * color.red);
+        pixels[index + 1] = static_cast<unsigned char>(coeff * color.green);
+        pixels[index + 2] = static_cast<unsigned char>(coeff * color.blue);
+        return;
     }
     else
     {
-        int xfloor = x - x % 7;
-        int yfloor = y - y % 7;
-        color = (xfloor + yfloor) % 2 ? c1 : c2;
+        int xfloor = x - x % 19;
+        int yfloor = y - y % 19;
+        color = (xfloor + yfloor) % 2 ? RGB(0xff, 0x80, 0x0d) : RGB(0xe5, 0, 0);
     }
     int index = (y * WIDTH + x) * 3;
     pixels[index] = static_cast<unsigned char>(color.red);

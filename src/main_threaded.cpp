@@ -63,35 +63,57 @@ void key_callback(GLFWwindow *window, int key, int scancode, int action, int mod
 }
 
 void renderChunk(std::vector<unsigned char> &pixels,
-                 int number,
-                 int startX, int endX,
-                 int startY, int endY)
+                 const int number,
+                 const int startX, const int endX,
+                 const int startY, const int endY);
+
+void renderTask(std::vector<unsigned char> &pixels,
+                int number,
+                const std::vector<int> &startX, const std::vector<int> &endX,
+                const std::vector<int> &startY, const std::vector<int> &endY)
+{
+
+    auto startTime = std::chrono::steady_clock::now();
+    for (int i = 0; i < startX.size(); ++i)
+    {
+        renderChunk(pixels, number, startX[i], endX[i], startY[i], endY[i]);
+    }
+    auto endTime = std::chrono::steady_clock::now();
+    std::chrono::duration<double> duration = endTime - startTime;
+    std::cout << "Thread " << number << " took " << duration.count() << " seconds.\n";
+}
+
+void renderChunk(std::vector<unsigned char> &pixels,
+                 const int number,
+                 const int startX, const int endX,
+                 const int startY, const int endY)
 {
     double step = (double)100 / ((endX - startX)) / ((endY - startY));
     float p = 0;
 
+    float auxX = 1.0f / WIDTH * 2.0f * boundX;
+    float auxY = 1.0f / HEIGHT * 2.0f * boundY;
+    float newX = (float)startX * auxX - boundX, newY;
+
     for (int x = startX; x < endX; x++)
     {
+        newX += auxX;
+        newY = (float)startY * auxY - boundY;
         for (int y = startY; y < endY; y++)
         {
-            float newX = (float)(x) / (WIDTH) * 2 * boundX - boundX;
-            float newY = (float)(y) / (HEIGHT) * 2 * boundY - boundY;
+            newY += auxY;
             int reps = inSet(newX * RADIUS + CENTER_X, newY * RADIUS + CENTER_Y);
-            float coeff = (float)reps / ITER;
+            float coeff = (float)reps * auxCoeff;
             coeff = pow(coeff, 0.2);
             if (coeff < 0.4)
                 coeff = pow(coeff, 6 - 12.5 * coeff);
             p += step;
-            std::cerr << number << ":\t" << p << "%\n";
-            // {
-            //     std::lock_guard<std::mutex> lock(mtx);
-            //     progress.store(p, std::memory_order_relaxed);
-            // }
-            int index = (y * WIDTH + x) * 3;
-            pixels[index] = static_cast<unsigned char>(200 * coeff);
-            pixels[index + 1] = static_cast<unsigned char>(130 * coeff);
-            pixels[index + 2] = static_cast<unsigned char>(35 * coeff);
-            // setChecked(pixels, x, y, coeff, RGB(0, 0, 0), PINK);
+
+            // int index = (y * WIDTH + x) * 3;
+            // pixels[index] = static_cast<unsigned char>(196 * coeff);
+            // pixels[index + 1] = static_cast<unsigned char>(41 * coeff);
+            // pixels[index + 2] = static_cast<unsigned char>(227 * coeff);
+            setChecked(pixels, x, y, coeff, RGB(0, 0, 0), PINK);
         }
     }
 }
@@ -106,15 +128,21 @@ void display(GLFWwindow *window)
     // int numThreads = 2;
     std::vector<std::thread> threads;
 
-    float chunkSizeY = HEIGHT / NUM_THREADS;
+    float chunkSizeY = HEIGHT / NUM_THREADS / GRANULARITY;
 
     auto timeBegin = std::chrono::steady_clock::now();
 
     for (int i = 0; i < NUM_THREADS; ++i)
     {
-        int startY = i * chunkSizeY;
-        int endY = (i + 1) * chunkSizeY;
-        threads.emplace_back(renderChunk, std::ref(pixels), i, 0, WIDTH, startY, endY);
+        std::vector<int> startY, endY, startX, endX;
+        for (int j = 0; j < GRANULARITY; ++j)
+        {
+            startX.push_back(0);
+            endX.push_back(WIDTH);
+            startY.push_back((j * NUM_THREADS + i) * chunkSizeY);
+            endY.push_back((j * NUM_THREADS + i + 1) * chunkSizeY);
+        }
+        threads.emplace_back(renderTask, std::ref(pixels), i, startX, endX, startY, endY);
     }
 
     for (auto &thread : threads)
@@ -125,6 +153,7 @@ void display(GLFWwindow *window)
     std::clog << "Execution time: " << duration.count() << " seconds\n";
     std::ofstream stat(STATS_DEFAULT_FILE, std::ofstream::app);
     stat << NUM_THREADS << '|';
+    stat << GRANULARITY << '|';
     stat << WIDTH << " x " << HEIGHT << '|';
     stat << duration.count() << '\n';
     stat.close();
@@ -143,7 +172,6 @@ void saveToPPM()
     int width, height;
     glfwGetFramebufferSize(glfwGetCurrentContext(), &width, &height);
 
-    // Print the PPM header
     out << "P6\n"
         << width << " " << height << "\n255\n";
 
@@ -158,16 +186,10 @@ void saveToPPM()
     }
 }
 
-const std::string SIZE_PARAM = "-s";
-const std::string OUTPUT_PARAM = "-o";
-const std::string BOUNDS_PARAM = "-c";
-const std::string THREADS_PARAM = "-t";
-
 int main(int argc, char **argv)
 {
     for (int i = 1; i < argc - argc % 2; i += 2)
     {
-        // std::cout << argv[i] << '|' << '\n';
         std::string s = argv[i];
         if (SIZE_PARAM == s)
         {
@@ -207,6 +229,10 @@ int main(int argc, char **argv)
         {
             NUM_THREADS = std::stoi(argv[i + 1]);
         }
+        else if (s == GRANULARITY_PARAM)
+        {
+            GRANULARITY = std::stoi(argv[i + 1]);
+        }
     }
 
     if (!glfwInit())
@@ -225,10 +251,9 @@ int main(int argc, char **argv)
 
     display(window);
 
-    // Loop until the user closes the window
+    //Loop until the user closes the window
     while (!glfwWindowShouldClose(window))
     {
-
         // Poll for and process events
         glfwPollEvents();
     }
