@@ -10,6 +10,58 @@
 #include <cstring>
 #include "util.h"
 
+void display(GLFWwindow *window);
+
+void key_callback(GLFWwindow *window, int key, int scancode, int action, int mods)
+{
+    if (action == GLFW_PRESS)
+    {
+        switch (key)
+        {
+        case GLFW_KEY_W:
+            CENTER_Y += RADIUS / 10.0f;
+            display(window);
+            break;
+        case GLFW_KEY_S:
+            CENTER_Y -= RADIUS / 10.0f;
+            display(window);
+            break;
+        case GLFW_KEY_A:
+            CENTER_X -= RADIUS / 10.0f;
+            display(window);
+            break;
+        case GLFW_KEY_D:
+            CENTER_X += RADIUS / 10.0f;
+            display(window);
+            break;
+        case GLFW_KEY_Z:
+            RADIUS *= 0.5f;
+            display(window);
+            break;
+        case GLFW_KEY_X:
+            RADIUS *= 2.0f;
+            display(window);
+            break;
+        case GLFW_KEY_UP:
+            CENTER_Y += RADIUS / 2.0f;
+            display(window);
+            break;
+        case GLFW_KEY_DOWN:
+            CENTER_Y -= RADIUS / 2.0f;
+            display(window);
+            break;
+        case GLFW_KEY_LEFT:
+            CENTER_X -= RADIUS / 2.0f;
+            display(window);
+            break;
+        case GLFW_KEY_RIGHT:
+            CENTER_X += RADIUS / 2.0f;
+            display(window);
+            break;
+        }
+    }
+}
+
 void renderChunk(std::vector<unsigned char> &pixels,
                  int number,
                  int startX, int endX,
@@ -24,7 +76,7 @@ void renderChunk(std::vector<unsigned char> &pixels,
         {
             float newX = (float)(x) / (WIDTH) * 2 * boundX - boundX;
             float newY = (float)(y) / (HEIGHT) * 2 * boundY - boundY;
-            int reps = inSet(newX / ZOOM + CENTER_X, newY / ZOOM + CENTER_Y);
+            int reps = inSet(newX * RADIUS + CENTER_X, newY * RADIUS + CENTER_Y);
             float coeff = (float)reps / ITER;
             coeff = pow(coeff, 0.2);
             if (coeff < 0.4)
@@ -35,15 +87,11 @@ void renderChunk(std::vector<unsigned char> &pixels,
             //     std::lock_guard<std::mutex> lock(mtx);
             //     progress.store(p, std::memory_order_relaxed);
             // }
-
-            // todo repair...not working properly!!!!!
-            // todo use struct
-            // setPink(pixels, x, y, coeff);
             int index = (y * WIDTH + x) * 3;
             pixels[index] = static_cast<unsigned char>(200 * coeff);
             pixels[index + 1] = static_cast<unsigned char>(130 * coeff);
             pixels[index + 2] = static_cast<unsigned char>(35 * coeff);
-            // setChecked(pixels, x, y, coeff, 0x00000000, 0x00ffffff);
+            // setChecked(pixels, x, y, coeff, RGB(0, 0, 0), PINK);
         }
     }
 }
@@ -55,15 +103,14 @@ void display(GLFWwindow *window)
 
     std::vector<unsigned char> pixels(WIDTH * HEIGHT * 3);
 
-    int numThreads = std::thread::hardware_concurrency();
     // int numThreads = 2;
     std::vector<std::thread> threads;
 
-    float chunkSizeY = HEIGHT / numThreads;
+    float chunkSizeY = HEIGHT / NUM_THREADS;
 
     auto timeBegin = std::chrono::steady_clock::now();
 
-    for (int i = 0; i < numThreads; ++i)
+    for (int i = 0; i < NUM_THREADS; ++i)
     {
         int startY = i * chunkSizeY;
         int endY = (i + 1) * chunkSizeY;
@@ -71,13 +118,16 @@ void display(GLFWwindow *window)
     }
 
     for (auto &thread : threads)
-    {
         thread.join();
-    }
 
     auto timeEnd = std::chrono::steady_clock::now();
     std::chrono::duration<double> duration = timeEnd - timeBegin;
     std::clog << "Execution time: " << duration.count() << " seconds\n";
+    std::ofstream stat(STATS_DEFAULT_FILE, std::ofstream::app);
+    stat << NUM_THREADS << '|';
+    stat << WIDTH << " x " << HEIGHT << '|';
+    stat << duration.count() << '\n';
+    stat.close();
 
     glDrawPixels(WIDTH, HEIGHT, GL_RGB, GL_UNSIGNED_BYTE, pixels.data());
 
@@ -110,14 +160,14 @@ void saveToPPM()
 
 const std::string SIZE_PARAM = "-s";
 const std::string OUTPUT_PARAM = "-o";
-const std::string BOUNDS_PARAM = "-r";
+const std::string BOUNDS_PARAM = "-c";
+const std::string THREADS_PARAM = "-t";
 
 int main(int argc, char **argv)
 {
-
     for (int i = 1; i < argc - argc % 2; i += 2)
     {
-        std::cout << argv[i] << '|' << '\n';
+        // std::cout << argv[i] << '|' << '\n';
         std::string s = argv[i];
         if (SIZE_PARAM == s)
         {
@@ -133,19 +183,29 @@ int main(int argc, char **argv)
         {
             out = std::ofstream(argv[i + 1], std::ios::out);
         }
-        else if (OUTPUT_PARAM == BOUNDS_PARAM)
+        else if (s == BOUNDS_PARAM)
         {
-            char *p = strchr(argv[i + 1], ':'), *q;
-            *p = 0, q = p + 1, p = strchr(q, ':');
-            MIN_X = std::stof(argv[i + 1]);
-            *p = 0, q = p + 1, p = strchr(q, ':');
-            MAX_X = std::stof(argv[i + 1]);
-            *p = 0, q = p + 1, p = strchr(q, ':');
-            MIN_Y = std::stof(argv[i + 1]);
-            *p = 0, q = p + 1, p = strchr(q, ':');
-            MAX_Y = std::stof(argv[i + 1]);
-            CENTER_X = (MIN_X + MAX_X) / 2;
-            CENTER_Y = (MIN_Y + MAX_Y) / 2;
+            if (*argv[i + 1] != 'x')
+                return 1;
+            ++argv[i + 1];
+            char *p = strchr(argv[i + 1], 'y'), *q = argv[i + 1];
+            if (!p)
+                return 1;
+            *p = 0;
+            CENTER_X = std::stof(q);
+            q = p + 1;
+            p = strchr(q, 'r');
+            if (!p)
+                return 1;
+            *p = 0;
+            CENTER_Y = std::stof(q);
+            q = p + 1;
+            RADIUS = std::stof(q);
+            // std::cerr << CENTER_X << '\t' << CENTER_Y << '\t' << RADIUS << '\n';
+        }
+        else if (s == THREADS_PARAM)
+        {
+            NUM_THREADS = std::stoi(argv[i + 1]);
         }
     }
 
@@ -161,6 +221,7 @@ int main(int argc, char **argv)
 
     // Make the window's context current
     glfwMakeContextCurrent(window);
+    glfwSetKeyCallback(window, key_callback);
 
     display(window);
 
