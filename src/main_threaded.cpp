@@ -69,25 +69,26 @@ void renderChunk(std::vector<unsigned char> &pixels,
 
 void renderTask(std::vector<unsigned char> &pixels,
                 int number,
-                const std::vector<int> &startX, const std::vector<int> &endX,
-                const std::vector<int> &startY, const std::vector<int> &endY)
+                const std::vector<int> &startY,
+                const std::vector<int> &endY)
 {
 
     auto startTime = std::chrono::steady_clock::now();
     for (int i = 0; i < startX.size(); ++i)
     {
-        renderChunk(pixels, number, startX[i], endX[i], startY[i], endY[i]);
+        renderChunk(pixels, number, startY[i], endY[i]);
     }
     auto endTime = std::chrono::steady_clock::now();
     std::chrono::duration<double> duration = endTime - startTime;
-    std::cout << "Thread " << number << " took " << duration.count() << " seconds.\n";
+    std::clog << "Thread " << number << " took "
+              << duration.count() << " seconds.\n";
 }
 
 void renderChunk(std::vector<unsigned char> &pixels,
                  const int number,
-                 const int startX, const int endX,
                  const int startY, const int endY)
 {
+    int startX = 0, endX = WIDTH;
     double step = (double)100 / ((endX - startX)) / ((endY - startY));
     float p = 0;
 
@@ -137,12 +138,13 @@ void display(GLFWwindow *window)
         std::vector<int> startY, endY, startX, endX;
         for (int j = 0; j < GRANULARITY; ++j)
         {
-            startX.push_back(0);
-            endX.push_back(WIDTH);
             startY.push_back((j * NUM_THREADS + i) * chunkSizeY);
             endY.push_back((j * NUM_THREADS + i + 1) * chunkSizeY);
         }
-        threads.emplace_back(renderTask, std::ref(pixels), i, startX, endX, startY, endY);
+        threads.emplace_back(renderTask,
+                             std::ref(pixels),
+                             i,
+                             startY, endY);
     }
 
     for (auto &thread : threads)
@@ -251,7 +253,7 @@ int main(int argc, char **argv)
 
     display(window);
 
-    //Loop until the user closes the window
+    // Loop until the user closes the window
     while (!glfwWindowShouldClose(window))
     {
         // Poll for and process events
