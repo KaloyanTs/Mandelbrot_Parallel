@@ -64,7 +64,6 @@ void key_callback(GLFWwindow *window, int key, int scancode, int action, int mod
 
 void renderChunk(std::vector<unsigned char> &pixels,
                  const int number,
-                 const int startX, const int endX,
                  const int startY, const int endY);
 
 void renderTask(std::vector<unsigned char> &pixels,
@@ -74,7 +73,7 @@ void renderTask(std::vector<unsigned char> &pixels,
 {
 
     auto startTime = std::chrono::steady_clock::now();
-    for (int i = 0; i < startX.size(); ++i)
+    for (int i = 0; i < startY.size(); ++i)
     {
         renderChunk(pixels, number, startY[i], endY[i]);
     }
@@ -110,17 +109,19 @@ void renderChunk(std::vector<unsigned char> &pixels,
                 coeff = pow(coeff, 6 - 12.5 * coeff);
             p += step;
 
-            // int index = (y * WIDTH + x) * 3;
-            // pixels[index] = static_cast<unsigned char>(196 * coeff);
-            // pixels[index + 1] = static_cast<unsigned char>(41 * coeff);
-            // pixels[index + 2] = static_cast<unsigned char>(227 * coeff);
-            setChecked(pixels, x, y, coeff, RGB(0, 0, 0), PINK);
+            int index = (y * WIDTH + x) * 3;
+            pixels[index] = static_cast<unsigned char>(RED * coeff + (1.0f - coeff) * 100);
+            pixels[index + 1] = static_cast<unsigned char>(GREEN * coeff + (1.0f - coeff) * 100);
+            pixels[index + 2] = static_cast<unsigned char>(BLUE * coeff + (1.0f - coeff) * 34);
+            // setChecked(pixels, x, y, coeff, RGB(0, 0, 0), PINK);
         }
     }
 }
 
 void display(GLFWwindow *window)
 {
+
+    std::clog << "Displaying " << CENTER_X << ' ' << CENTER_Y << ' ' << RADIUS << '\n';
     // Clear the color buffer
     glClear(GL_COLOR_BUFFER_BIT);
 
@@ -225,6 +226,26 @@ int main(int argc, char **argv)
             CENTER_Y = std::stof(q);
             q = p + 1;
             RADIUS = std::stof(q);
+            // std::cerr << CENTER_X << '\t' << CENTER_Y << '\t' << RADIUS << '\n';
+        }
+        else if (s == COLOURS_PARAM)
+        {
+            if (*argv[i + 1] != 'r')
+                return 1;
+            ++argv[i + 1];
+            char *p = strchr(argv[i + 1], 'g'), *q = argv[i + 1];
+            if (!p)
+                return 1;
+            *p = 0;
+            RED = std::stoi(q);
+            q = p + 1;
+            p = strchr(q, 'b');
+            if (!p)
+                return 1;
+            *p = 0;
+            GREEN = std::stoi(q);
+            q = p + 1;
+            BLUE = std::stof(q);
             // std::cerr << CENTER_X << '\t' << CENTER_Y << '\t' << RADIUS << '\n';
         }
         else if (s == THREADS_PARAM)

@@ -15,7 +15,7 @@ float RATIO_HW = (float)HEIGHT / WIDTH;
 float CENTER_X = -0.4f;
 float CENTER_Y = 0.0f;
 // float RADIUS = 0.02f;
-float RADIUS = 1.0f;
+float RADIUS = 1.2f;
 int NUM_THREADS = std::thread::hardware_concurrency();
 int ITER = 10000;
 int GRANULARITY = 1;
@@ -42,6 +42,7 @@ const std::string OUTPUT_PARAM = "-o";
 const std::string BOUNDS_PARAM = "-c";
 const std::string THREADS_PARAM = "-t";
 const std::string GRANULARITY_PARAM = "-g";
+const std::string COLOURS_PARAM = "-v";
 
 struct RGB
 {
@@ -50,6 +51,9 @@ struct RGB
 };
 
 const RGB PINK(0xff, 80, 0xd5);
+short RED = 0xff;
+short GREEN = 0x80;
+short BLUE = 0xd5;
 
 int inSet(float x, float y)
 {
@@ -92,7 +96,7 @@ void setChecked(std::vector<unsigned char> &pixels, int x, int y, float coeff, R
     RGB color(0, 0, 0);
     if (coeff < 1.0f)
     {
-        coeff=pow(coeff, 0.3);
+        coeff = pow(coeff, 0.3);
         color = RGB(0xff, 0xff, 0x00);
         int index = (y * WIDTH + x) * 3;
         pixels[index] = static_cast<unsigned char>(coeff * color.red);
