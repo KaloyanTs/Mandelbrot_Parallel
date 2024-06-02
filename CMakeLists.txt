@@ -21,5 +21,12 @@ set(SOURCES
 # Add executable
 add_executable(mandelbrot ${SOURCES})
 
+# Define a custom target to run the executable with arguments
+add_custom_target(RunWithArgs
+    COMMAND mandelbrot -t 1
+    DEPENDS mandelbrot
+    COMMENT "Running mandelbrot with arguments"
+)
+
 # Link libraries
 target_link_libraries(mandelbrot PRIVATE OpenGL::GL glfw OpenMP::OpenMP_CXX)
