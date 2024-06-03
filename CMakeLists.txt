@@ -23,7 +23,7 @@ endif()
 # )
 
 set(SOURCES 
-    ./src/dynamic_no_output.cpp
+    ./src/static_no_output.cpp
 )
 
 # Add executable
