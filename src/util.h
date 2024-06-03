@@ -1,5 +1,3 @@
-#include <GL/gl.h>
-#include <GLFW/glfw3.h>
 #include <iostream>
 #include <algorithm>
 #include <fstream>

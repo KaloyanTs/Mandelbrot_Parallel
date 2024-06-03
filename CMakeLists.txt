@@ -18,8 +18,12 @@ endif()
 #     ./src/main_threaded.cpp
 # )
 
+# set(SOURCES 
+#     ./src/main_mpi_smart.cpp
+# )
+
 set(SOURCES 
-    ./src/main_mpi_smart.cpp
+    ./src/dynamic_no_output.cpp
 )
 
 # Add executable
