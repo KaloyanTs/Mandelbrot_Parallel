@@ -275,11 +275,11 @@ int main(int argc, char **argv)
     display(window);
 
     // Loop until the user closes the window
-    // while (!glfwWindowShouldClose(window))
-    // {
-    //     // Poll for and process events
-    //     glfwPollEvents();
-    // }
+    while (!glfwWindowShouldClose(window))
+    {
+        // Poll for and process events
+        glfwPollEvents();
+    }
 
     // saveToPPM();
 

@@ -7,8 +7,8 @@
 #include <sstream>
 #include <iomanip>
 
-int WIDTH = 2048;
-int HEIGHT = 1080;
+int WIDTH = 512;
+int HEIGHT = 270;
 float RATIO_HW = (float)HEIGHT / WIDTH;
 // float CENTER_X = -1.30f;
 // float CENTER_Y = 0.072f;
