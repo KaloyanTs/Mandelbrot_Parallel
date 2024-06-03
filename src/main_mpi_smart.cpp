@@ -264,10 +264,10 @@ int main(int argc, char **argv)
 
     display(window);
 
-    // while (!glfwWindowShouldClose(window))
-    //     glfwPollEvents();
+    while (!glfwWindowShouldClose(window))
+        glfwPollEvents();
 
-    // saveToPPM()
+    saveToPPM();
 
     glfwTerminate();
     out.close();
