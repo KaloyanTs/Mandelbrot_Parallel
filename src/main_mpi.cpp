@@ -98,26 +98,28 @@ void worker(int rank)
     int task;
     int result[2];
     MPI_Status status;
+    int task_count = 0;
     high_resolution_clock::time_point worker_start_time, worker_end_time;
     duration<double> worker_elapsed_time;
     double total_worker_time = 0;
 
     while (true)
     {
-        worker_start_time = high_resolution_clock::now(); // Start timing for worker
+        worker_start_time = high_resolution_clock::now();
         MPI_Recv(&task, 1, MPI_INT, 0, 0, MPI_COMM_WORLD, &status);
         if (task == -1)
             break;
+        task_count++;
         int x = task % WIDTH;
         int y = task / WIDTH;
         result[0] = task;
         result[1] = mandelbrot(x, y);
         MPI_Send(result, 2, MPI_INT, 0, 0, MPI_COMM_WORLD);
-        worker_end_time = high_resolution_clock::now(); // End timing for worker
+        worker_end_time = high_resolution_clock::now();
         worker_elapsed_time = duration_cast<duration<double>>(worker_end_time - worker_start_time);
         total_worker_time += worker_elapsed_time.count();
-        // cout << "Worker " << rank << " time taken: " << worker_elapsed_time.count() << " seconds" << endl; // Commented out
     }
+    cout << "Worker " << rank << " solved " << (float)task_count/5/HEIGHT << " tasks." << endl;
     cout << "Total time taken by Worker " << rank << ": " << total_worker_time << " seconds" << endl;
 }
 
