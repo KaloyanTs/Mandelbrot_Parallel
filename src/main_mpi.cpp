@@ -4,6 +4,7 @@
 #include <vector>
 #include <complex>
 #include <chrono>
+#include <atomic>
 
 using namespace std;
 using namespace chrono;
@@ -12,6 +13,7 @@ const int WIDTH = 800;
 const int HEIGHT = 600;
 const double RATIO_HW = (double)HEIGHT / WIDTH;
 const int MAX_ITER = 1000;
+std::atomic<int> row = 0;
 
 int mandelbrot(int x, int y)
 {
@@ -103,6 +105,16 @@ void worker(int rank)
     duration<double> worker_elapsed_time;
     double total_worker_time = 0;
 
+    for(int i=row.fetch_add(5);i<HEIGHT;i=row.fetch_add(5))
+    {
+        for(int j=i;j<i+5;++j)
+        for(int x=0;x<WIDTH;++x)
+        {
+            int value = mandelbrot(x, y);
+            if(value >=MAX_ITER) 
+        }
+    }
+
     while (true)
     {
         worker_start_time = high_resolution_clock::now();
@@ -119,7 +131,7 @@ void worker(int rank)
         worker_elapsed_time = duration_cast<duration<double>>(worker_end_time - worker_start_time);
         total_worker_time += worker_elapsed_time.count();
     }
-    cout << "Worker " << rank << " solved " << (float)task_count/5/HEIGHT << " tasks." << endl;
+    cout << "Worker " << rank << " solved " << (float)task_count / 5 / HEIGHT << " tasks." << endl;
     cout << "Total time taken by Worker " << rank << ": " << total_worker_time << " seconds" << endl;
 }
 
@@ -149,4 +161,3 @@ int main(int argc, char *argv[])
 
     return 0;
 }
-

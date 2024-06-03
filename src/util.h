@@ -24,6 +24,10 @@ int ITER = 10000;
 int GRANULARITY = 1;
 float auxCoeff = 1.0f / ITER;
 
+//MPI
+std::atomic<int> rowIdx = 0;
+const int STRIP_SIZE = 5;
+
 float boundX = std::max(1.0f, 1 / RATIO_HW);
 float boundY = std::max(1.0f, RATIO_HW);
 
