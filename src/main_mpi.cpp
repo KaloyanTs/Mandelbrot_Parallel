@@ -60,7 +60,7 @@ void master(int num_procs)
     vector<int> image(WIDTH * HEIGHT, 0);
     int next_task = 0;
     MPI_Status status;
-    high_resolution_clock::time_point master_start_time = high_resolution_clock::now(); // Start timing for master
+    high_resolution_clock::time_point master_start_time = high_resolution_clock::now();
 
     for (int rank = 1; rank < num_procs; ++rank)
     {
@@ -86,7 +86,7 @@ void master(int num_procs)
         }
     }
 
-    high_resolution_clock::time_point master_end_time = high_resolution_clock::now(); // End timing for master
+    high_resolution_clock::time_point master_end_time = high_resolution_clock::now();
     duration<double> master_elapsed_time = duration_cast<duration<double>>(master_end_time - master_start_time);
     cout << "Total time taken by master: " << master_elapsed_time.count() << " seconds" << endl;
 
@@ -130,7 +130,7 @@ int main(int argc, char *argv[])
     high_resolution_clock::time_point start_time, end_time;
     duration<double> elapsed_time;
 
-    start_time = high_resolution_clock::now(); // Start timing for entire program
+    start_time = high_resolution_clock::now();
 
     int rank, num_procs;
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
@@ -143,7 +143,7 @@ int main(int argc, char *argv[])
 
     MPI_Finalize();
 
-    end_time = high_resolution_clock::now(); // End timing for entire program
+    end_time = high_resolution_clock::now();
     elapsed_time = duration_cast<duration<double>>(end_time - start_time);
     cout << "Total time taken by the program: " << elapsed_time.count() << " seconds" << endl;
 

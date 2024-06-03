@@ -122,12 +122,10 @@ void display(GLFWwindow *window)
 {
 
     std::clog << "Displaying " << CENTER_X << ' ' << CENTER_Y << ' ' << RADIUS << '\n';
-    // Clear the color buffer
     glClear(GL_COLOR_BUFFER_BIT);
 
     std::vector<unsigned char> pixels(WIDTH * HEIGHT * 3);
 
-    // int numThreads = 2;
     std::vector<std::thread> threads;
 
     float chunkSizeY = HEIGHT / NUM_THREADS / GRANULARITY;
@@ -162,11 +160,7 @@ void display(GLFWwindow *window)
     stat.close();
 
     glDrawPixels(WIDTH, HEIGHT, GL_RGB, GL_UNSIGNED_BYTE, pixels.data());
-
-    // Swap front and back buffers
     glfwSwapBuffers(window);
-
-    // Poll for and process events
     glfwPollEvents();
 }
 
@@ -226,7 +220,6 @@ int main(int argc, char **argv)
             CENTER_Y = std::stof(q);
             q = p + 1;
             RADIUS = std::stof(q);
-            // std::cerr << CENTER_X << '\t' << CENTER_Y << '\t' << RADIUS << '\n';
         }
         else if (s == COLOURS_PARAM)
         {
@@ -246,7 +239,6 @@ int main(int argc, char **argv)
             GREEN = std::stoi(q);
             q = p + 1;
             BLUE = std::stof(q);
-            // std::cerr << CENTER_X << '\t' << CENTER_Y << '\t' << RADIUS << '\n';
         }
         else if (s == THREADS_PARAM)
         {
@@ -268,20 +260,13 @@ int main(int argc, char **argv)
         return -1;
     }
 
-    // Make the window's context current
     glfwMakeContextCurrent(window);
     glfwSetKeyCallback(window, key_callback);
 
     display(window);
 
-    // Loop until the user closes the window
     while (!glfwWindowShouldClose(window))
-    {
-        // Poll for and process events
         glfwPollEvents();
-    }
-
-    // saveToPPM();
 
     glfwTerminate();
     out.close();
