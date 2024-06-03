@@ -14,8 +14,12 @@ if(NOT OPENMP_FOUND)
 endif()
 
 # Add your source files here
+# set(SOURCES 
+#     ./src/main_threaded.cpp
+# )
+
 set(SOURCES 
-    ./src/main_threaded.cpp
+    ./src/main_mpi_smart.cpp
 )
 
 # Add executable

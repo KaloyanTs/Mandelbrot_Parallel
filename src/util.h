@@ -7,24 +7,24 @@
 #include <sstream>
 #include <iomanip>
 
-int WIDTH = 512;
-int HEIGHT = 270;
+int WIDTH = 1000;
+int HEIGHT = 1000;
 float RATIO_HW = (float)HEIGHT / WIDTH;
 // float CENTER_X = -1.30f;
 // float CENTER_Y = 0.072f;
-// float CENTER_X = -0.4f;
-// float CENTER_Y = 0.0f;
-float CENTER_X = -0.3575f;
-float CENTER_Y = 0.6375f;
+float CENTER_X = -0.4f;
+float CENTER_Y = 0.0f;
+// float CENTER_X = -0.3575f;
+// float CENTER_Y = 0.6375f;
 // float RADIUS = 0.02f;
-// float RADIUS = 1.2f;
-float RADIUS = 0.0475f;
+float RADIUS = 1.2f;
+// float RADIUS = 0.0475f;
 int NUM_THREADS = std::thread::hardware_concurrency();
 int ITER = 10000;
 int GRANULARITY = 1;
 float auxCoeff = 1.0f / ITER;
 
-//MPI
+// MPI
 std::atomic<int> rowIdx = 0;
 const int STRIP_SIZE = 5;
 

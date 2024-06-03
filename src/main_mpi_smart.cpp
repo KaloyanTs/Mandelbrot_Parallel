@@ -10,6 +10,8 @@
 #include <cstring>
 #include "util.h"
 
+std::vector<int> granularity_measure;
+
 void display(GLFWwindow *window);
 
 void key_callback(GLFWwindow *window, int key, int scancode, int action, int mods)
@@ -71,14 +73,20 @@ void renderTask(std::vector<unsigned char> &pixels,
 {
 
     auto startTime = std::chrono::steady_clock::now();
+    int count = 0;
 
     for (int i = rowIdx.fetch_add(STRIP_SIZE); i < HEIGHT; i = rowIdx.fetch_add(STRIP_SIZE))
-        renderChunk(pixels, number, i, min(i + STRIP_SIZE, HEIGHT - 1));
+    {
+        renderChunk(pixels, number, i, std::min(i + STRIP_SIZE, HEIGHT - 1));
+        ++count;
+    }
 
     auto endTime = std::chrono::steady_clock::now();
     std::chrono::duration<double> duration = endTime - startTime;
     std::clog << "Thread " << number << " took "
               << duration.count() << " seconds.\n";
+    granularity_measure[number] = count;
+    std::clog << number << " :    " << count << '\n';
 }
 
 void renderChunk(std::vector<unsigned char> &pixels,
@@ -122,6 +130,8 @@ void display(GLFWwindow *window)
     std::clog << "Displaying " << CENTER_X << ' ' << CENTER_Y << ' ' << RADIUS << '\n';
     glClear(GL_COLOR_BUFFER_BIT);
 
+    rowIdx.operator=(0);
+
     std::vector<unsigned char> pixels(WIDTH * HEIGHT * 3);
     std::vector<std::thread> threads;
     auto timeBegin = std::chrono::steady_clock::now();
@@ -138,11 +148,15 @@ void display(GLFWwindow *window)
         thread.join();
 
     auto timeEnd = std::chrono::steady_clock::now();
+    int gr = -1;
+    for (auto x : granularity_measure)
+        gr = std::max(gr, x);
     std::chrono::duration<double> duration = timeEnd - timeBegin;
     std::clog << "Execution time: " << duration.count() << " seconds\n";
+    std::clog << "Granularity: " << gr << " tasks\n";
     std::ofstream stat("/home/kaloyants/Documents/spo/stats/dynamic.csv", std::ofstream::app);
     stat << NUM_THREADS << '|';
-    stat << GRANULARITY << '|';
+    stat << gr << '|';
     stat << WIDTH << " x " << HEIGHT << '|';
     stat << duration.count() << '\n';
     stat.close();
@@ -232,11 +246,8 @@ int main(int argc, char **argv)
         {
             NUM_THREADS = std::stoi(argv[i + 1]);
         }
-        else if (s == GRANULARITY_PARAM)
-        {
-            GRANULARITY = std::stoi(argv[i + 1]);
-        }
     }
+    granularity_measure = std::vector<int>(NUM_THREADS, 0);
 
     if (!glfwInit())
         return -1;
@@ -253,8 +264,10 @@ int main(int argc, char **argv)
 
     display(window);
 
-    while (!glfwWindowShouldClose(window))
-        glfwPollEvents();
+    // while (!glfwWindowShouldClose(window))
+    //     glfwPollEvents();
+
+    // saveToPPM()
 
     glfwTerminate();
     out.close();
