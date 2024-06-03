@@ -1,0 +1,340 @@
+
+----------
+1
+Worker 1 solved 160 tasks.
+Total time taken by Worker 1: 5.5476 seconds
+Total time taken by master: 5.57342 seconds
+Total time taken by the program: 5.67564 seconds
+Total time taken by the program: 5.67619 seconds
+----------
+2
+Total time taken by master: 4.38451 seconds
+Worker 1 solved 83.928 tasks.
+Total time taken by Worker 1: 4.38191 seconds
+Worker 2 solved 76.072 tasks.
+Total time taken by Worker 2: 4.38081 seconds
+Total time taken by the program: 4.45965 seconds
+Total time taken by the program: 4.45985 seconds
+Total time taken by the program: 4.50005 seconds
+----------
+4
+Worker 3 solved 43.036 tasks.
+Total time taken by master: 4.01872 seconds
+Worker 1 solved 35.634 tasks.
+Total time taken by Worker 1: 4.01223 seconds
+Worker 2 solved 35.3823 tasks.
+Total time taken by Worker 2: 4.0116 seconds
+Total time taken by Worker 3: 4.01005 seconds
+Worker 4 solved 45.9477 tasks.
+Total time taken by Worker 4: 4.00851 seconds
+Total time taken by the program: 4.08233 seconds
+Total time taken by the program: 4.08249 seconds
+Total time taken by the program: 4.0828 seconds
+Total time taken by the program: 4.08442 seconds
+Total time taken by the program: 4.12069 seconds
+----------
+8
+Worker 5 solved 18.1567 tasks.
+Total time taken by Worker 5: 3.26298 seconds
+Worker 7 solved 21.4003 tasks.
+Total time taken by Worker 7: 3.2711 seconds
+Total time taken by master: 3.27805 seconds
+Worker 1 solved 19.063 tasks.
+Total time taken by Worker 1: 3.26364 seconds
+Worker 2 solved 22.247 tasks.
+Total time taken by Worker 2: 3.27442 seconds
+Worker 6 solved 23.255 tasks.
+Total time taken by Worker 6: 3.27478 seconds
+Worker 4 solved 18.0097 tasks.
+Worker 8 solved 19.4913 tasks.
+Total time taken by Worker 8: 3.27589 seconds
+Total time taken by Worker 4: 3.26399 seconds
+Worker 3 solved 18.377 tasks.
+Total time taken by Worker 3: 3.27617 seconds
+Total time taken by the program: 3.34578 seconds
+Total time taken by the program: 3.33401 seconds
+Total time taken by the program: 3.33376 seconds
+Total time taken by the program: 3.34324 seconds
+Total time taken by the program: 3.33556 seconds
+Total time taken by the program: 3.34982 seconds
+Total time taken by the program: 3.34999 seconds
+Total time taken by the program: 3.35239 seconds
+Total time taken by the program: 3.38295 seconds
+----------
+16
+Worker 11 solved 9.974 tasks.
+Total time taken by Worker 11: 3.35991 seconds
+Worker 14 solved 10.6583 tasks.
+Total time taken by Worker 14: 3.36747 seconds
+Worker 15 solved 10.415 tasks.
+Worker 16 solved 9.13633 tasks.
+Total time taken by Worker 16: 3.36271 seconds
+Worker 2 solved 10.3867 tasks.
+Total time taken by Worker 2: 3.36709 seconds
+Worker 6 solved 8.8 tasks.
+Total time taken by Worker 6: 3.37577 seconds
+Worker 5 solved 10.5167 tasks.
+Total time taken by Worker 5: 3.37467 seconds
+Worker 7 solved 9.11833 tasks.
+Total time taken by Worker 7: 3.37202 seconds
+Worker 8 solved 10.0193 tasks.
+Total time taken by Worker 8: 3.36735 seconds
+Worker 9 solved 11.5363 tasks.
+Total time taken by Worker 9: 3.37215 seconds
+Worker 10 solved 11.148 tasks.
+Total time taken by Worker 10: 3.37437 seconds
+Worker 12 solved 10.0187 tasks.
+Total time taken by Worker 12: 3.3686 seconds
+Worker 13 solved 9.69367 tasks.
+Total time taken by Worker 13: 3.35989 seconds
+Total time taken by Worker 15: 3.36124 seconds
+Total time taken by master: 3.37279 seconds
+Worker 1 solved 9.64733 tasks.
+Total time taken by Worker 1: 3.37538 seconds
+Worker 3 solved 7.99633 tasks.
+Total time taken by Worker 3: 3.37554 seconds
+Worker 4 solved 10.935 tasks.
+Total time taken by Worker 4: 3.37498 seconds
+Total time taken by the program: 3.44275 seconds
+Total time taken by the program: 3.44385 seconds
+Total time taken by the program: 3.44433 seconds
+Total time taken by the program: 3.44351 seconds
+Total time taken by the program: 3.44492 seconds
+Total time taken by the program: 3.4389 seconds
+Total time taken by the program: 3.4421 seconds
+Total time taken by the program: 3.45473 seconds
+Total time taken by the program: 3.45553 seconds
+Total time taken by the program: 3.45503 seconds
+Total time taken by the program: 3.45239 seconds
+Total time taken by the program: 3.45689 seconds
+Total time taken by the program: 3.4487 seconds
+Total time taken by the program: 3.44426 seconds
+Total time taken by the program: 3.45209 seconds
+Total time taken by the program: 3.44835 seconds
+Total time taken by the program: 3.50617 seconds
+----------
+1
+Worker 1 solved 160 tasks.
+Total time taken by Worker 1: 5.52249 seconds
+Total time taken by master: 5.54892 seconds
+Total time taken by the program: 5.61234 seconds
+Total time taken by the program: 5.65881 seconds
+----------
+2
+Worker 2 solved 70.7777 tasks.
+Total time taken by Worker 2: 4.29887 seconds
+Total time taken by master: 4.30197 seconds
+Worker 1 solved 89.2223 tasks.
+Total time taken by Worker 1: 4.30878 seconds
+Total time taken by the program: 4.37769 seconds
+Total time taken by the program: 4.37784 seconds
+Total time taken by the program: 4.42026 seconds
+----------
+4
+Worker 4 solved 38.306 tasks.
+Total time taken by Worker 4: 4.01229 seconds
+Total time taken by master: 4.01927 seconds
+Worker 1 solved 35.906 tasks.
+Total time taken by Worker 1: 4.01389 seconds
+Worker 3 solved 43.6983 tasks.
+Total time taken by Worker 3: 4.01217 seconds
+Worker 2 solved 42.0897 tasks.
+Total time taken by Worker 2: 4.0128 seconds
+Total time taken by the program: 4.0878 seconds
+Total time taken by the program: 4.08782 seconds
+Total time taken by the program: 4.08812 seconds
+Total time taken by the program: 4.0889 seconds
+Total time taken by the program: 4.12935 seconds
+----------
+8
+Worker 5 solved 20.5197 tasks.
+Worker 6 solved 18.5363 tasks.
+Total time taken by Worker 6: 3.15193 seconds
+Total time taken by master: 3.15951 seconds
+Worker 1 solved 21.2503 tasks.
+Total time taken by Worker 1: 3.15423 seconds
+Worker 3 solved 19.9993 tasks.
+Total time taken by Worker 3: 3.15868 seconds
+Worker 7 solved 19.923 tasks.
+Total time taken by Worker 7: 3.15835 seconds
+Total time taken by Worker 5: 3.15773 seconds
+Worker 4 solved 20.045 tasks.
+Total time taken by Worker 4: 3.15341 seconds
+Worker 8 solved 21.1233 tasks.
+Total time taken by Worker 8: 3.15465 seconds
+Worker 2 solved 18.603 tasks.
+Total time taken by Worker 2: 3.15816 seconds
+Total time taken by the program: 3.22625 seconds
+Total time taken by the program: 3.22274 seconds
+Total time taken by the program: 3.22701 seconds
+Total time taken by the program: 3.2291 seconds
+Total time taken by the program: 3.22557 seconds
+Total time taken by the program: 3.2305 seconds
+Total time taken by the program: 3.22781 seconds
+Total time taken by the program: 3.22592 seconds
+Total time taken by the program: 3.2688 seconds
+----------
+16
+Worker 13 solved 9.25567 tasks.
+Total time taken by Worker 13: 3.31723 seconds
+Worker 14 solved 10.2897 tasks.
+Total time taken by Worker 14: 3.32012 seconds
+Worker 16 solved 9.11433 tasks.
+Total time taken by Worker 16: 3.32 seconds
+Worker 1 solved 12.7783 tasks.
+Worker 2 solved 11.959 tasks.
+Total time taken by Worker 2: 3.31286 seconds
+Worker 4 solved 10.0193 tasks.
+Total time taken by Worker 4: 3.31926 seconds
+Worker 5 solved 9.29333 tasks.
+Total time taken by Worker 5: 3.3061 seconds
+Worker 6 solved 9.168 tasks.
+Total time taken by Worker 6: 3.31492 seconds
+Worker 15 solved 12.803 tasks.
+Total time taken by Worker 15: 3.31855 seconds
+Worker 12 solved 8.04167 tasks.
+Total time taken by Worker 12: 3.32092 seconds
+Worker 10 solved 9.09367 tasks.
+Worker 7 solved 8.861 tasks.
+Total time taken by Worker 7: 3.31683 seconds
+Total time taken by Worker 10: 3.31939 seconds
+Worker 8 solved 10.4063 tasks.
+Total time taken by Worker 8: 3.32005 seconds
+Total time taken by Worker 1: 3.31924 seconds
+Total time taken by master: 3.29309 seconds
+Worker 11 solved 9.72333 tasks.
+Total time taken by Worker 11: 3.31882 seconds
+Worker 9 solved 10.0257 tasks.
+Total time taken by Worker 9: 3.30696 seconds
+Worker 3 solved 9.16767 tasks.
+Total time taken by Worker 3: 3.31048 seconds
+Total time taken by the program: 3.38976 seconds
+Total time taken by the program: 3.39003 seconds
+Total time taken by the program: 3.39411 seconds
+Total time taken by the program: 3.39614 seconds
+Total time taken by the program: 3.39058 seconds
+Total time taken by the program: 3.39851 seconds
+Total time taken by the program: 3.39377 seconds
+Total time taken by the program: 3.3848 seconds
+Total time taken by the program: 3.39939 seconds
+Total time taken by the program: 3.40236 seconds
+Total time taken by the program: 3.40373 seconds
+Total time taken by the program: 3.40191 seconds
+Total time taken by the program: 3.40485 seconds
+Total time taken by the program: 3.39331 seconds
+Total time taken by the program: 3.40108 seconds
+Total time taken by the program: 3.41017 seconds
+Total time taken by the program: 3.42239 seconds
+----------
+1
+Total time taken by master: 5.54793 seconds
+Worker 1 solved 160 tasks.
+Total time taken by Worker 1: 5.52231 seconds
+Total time taken by the program: 5.61373 seconds
+Total time taken by the program: 5.65816 seconds
+----------
+2
+Total time taken by master: 4.33719 seconds
+Worker 1 solved 69.471 tasks.
+Total time taken by Worker 1: 4.32504 seconds
+Worker 2 solved 90.529 tasks.
+Total time taken by Worker 2: 4.32581 seconds
+Total time taken by the program: 4.4059 seconds
+Total time taken by the program: 4.40599 seconds
+Total time taken by the program: 4.45075 seconds
+----------
+4
+Worker 3 solved 31.715 tasks.
+Total time taken by Worker 3: 3.94033 seconds
+Worker 4 solved 40.242 tasks.
+Total time taken by Worker 4: 3.93798 seconds
+Total time taken by master: 3.94455 seconds
+Worker 1 solved 47.902 tasks.
+Total time taken by Worker 1: 3.9354 seconds
+Worker 2 solved 40.141 tasks.
+Total time taken by Worker 2: 3.93778 seconds
+Total time taken by the program: 4.01037 seconds
+Total time taken by the program: 4.01027 seconds
+Total time taken by the program: 4.01097 seconds
+Total time taken by the program: 4.01181 seconds
+Total time taken by the program: 4.0502 seconds
+----------
+8
+Worker 5 solved 19.017 tasks.
+Total time taken by Worker 5: 3.41142 seconds
+Worker 2 solved 20.9407 tasks.
+Worker 3 solved 19.6317 tasks.
+Total time taken by Worker 3: 3.42223 seconds
+Worker 1 solved 20.059 tasks.
+Total time taken by Worker 1: 3.42237 seconds
+Total time taken by Worker 2: 3.42227 seconds
+Worker 8 solved 22.476 tasks.
+Total time taken by Worker 8: 3.42294 seconds
+Total time taken by master: 3.42335 seconds
+Worker 4 solved 18.5743 tasks.
+Total time taken by Worker 4: 3.41611 seconds
+Worker 6 solved 20.2997 tasks.
+Total time taken by Worker 6: 3.41773 seconds
+Worker 7 solved 19.0017 tasks.
+Total time taken by Worker 7: 3.41731 seconds
+Total time taken by the program: 3.48172 seconds
+Total time taken by the program: 3.47862 seconds
+Total time taken by the program: 3.49113 seconds
+Total time taken by the program: 3.4857 seconds
+Total time taken by the program: 3.49192 seconds
+Total time taken by the program: 3.48777 seconds
+Total time taken by the program: 3.49333 seconds
+Total time taken by the program: 3.4948 seconds
+Total time taken by the program: 3.53296 seconds
+----------
+16
+Worker 3 solved 8.966 tasks.
+Worker 5 solved 8.91067 tasks.
+Total time taken by Worker 5: 3.4937 seconds
+Worker 11 solved 8.72967 tasks.
+Worker 12 solved 9.50367 tasks.
+Total time taken by Worker 12: 3.47644 seconds
+Worker 16 solved 9.74167 tasks.
+Total time taken by Worker 16: 3.47189 seconds
+Worker 6 solved 10.3057 tasks.
+Total time taken by Worker 6: 3.49265 seconds
+Worker 2 solved 11.551 tasks.
+Total time taken by Worker 2: 3.49156 seconds
+Worker 4 solved 10.6077 tasks.
+Total time taken by Worker 4: 3.49352 seconds
+Total time taken by Worker 3: 3.49394 seconds
+Worker 7 solved 11.9957 tasks.
+Total time taken by Worker 7: 3.485 seconds
+Worker 8 solved 13.0853 tasks.
+Total time taken by Worker 8: 3.49241 seconds
+Worker 9 solved 10.4553 tasks.
+Total time taken by Worker 9: 3.4926 seconds
+Worker 10 solved 9.518 tasks.
+Total time taken by Worker 10: 3.4937 seconds
+Total time taken by Worker 11: 3.49423 seconds
+Worker 13 solved 9.57067 tasks.
+Total time taken by Worker 13: 3.49362 seconds
+Worker 14 solved 8.71867 tasks.
+Total time taken by Worker 14: 3.48025 seconds
+Worker 15 solved 9.00733 tasks.
+Total time taken by Worker 15: 3.47296 seconds
+Total time taken by master: 3.49225 seconds
+Worker 1 solved 9.333 tasks.
+Total time taken by Worker 1: 3.49134 seconds
+Total time taken by the program: 3.56226 seconds
+Total time taken by the program: 3.54201 seconds
+Total time taken by the program: 3.54295 seconds
+Total time taken by the program: 3.56553 seconds
+Total time taken by the program: 3.56641 seconds
+Total time taken by the program: 3.5497 seconds
+Total time taken by the program: 3.56915 seconds
+Total time taken by the program: 3.55547 seconds
+Total time taken by the program: 3.56972 seconds
+Total time taken by the program: 3.57083 seconds
+Total time taken by the program: 3.57139 seconds
+Total time taken by the program: 3.57078 seconds
+Total time taken by the program: 3.57452 seconds
+Total time taken by the program: 3.57539 seconds
+Total time taken by the program: 3.57462 seconds
+Total time taken by the program: 3.57102 seconds
+Total time taken by the program: 3.60713 seconds
