@@ -2,16 +2,16 @@ cmake_minimum_required(VERSION 3.12)
 project(spo_mandelbrot VERSION 1.0)
 
 # Find OpenGL
-find_package(OpenGL REQUIRED)
-if(NOT OPENGL_FOUND)
-    message(FATAL_ERROR "OpenGL not found!")
-endif()
+# find_package(OpenGL REQUIRED)
+# if(NOT OPENGL_FOUND)
+#     message(FATAL_ERROR "OpenGL not found!")
+# endif()
 
-# Enable OpenMP
-find_package(OpenMP REQUIRED)
-if(NOT OPENMP_FOUND)
-    message(FATAL_ERROR "OpenMP not found!")
-endif()
+# # Enable OpenMP
+# find_package(OpenMP REQUIRED)
+# if(NOT OPENMP_FOUND)
+#     message(FATAL_ERROR "OpenMP not found!")
+# endif()
 
 # Add your source files here
 # set(SOURCES 
@@ -23,7 +23,7 @@ endif()
 # )
 
 set(SOURCES 
-    ./src/static_no_output.cpp
+    ./src/dynamic_no_output.cpp
 )
 
 # Add executable
@@ -37,4 +37,4 @@ add_custom_target(RunWithArgs
 )
 
 # Link libraries
-target_link_libraries(mandelbrot PRIVATE OpenGL::GL glfw OpenMP::OpenMP_CXX)
+# target_link_libraries(mandelbrot PRIVATE OpenGL::GL glfw OpenMP::OpenMP_CXX)
