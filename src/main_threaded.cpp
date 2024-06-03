@@ -261,7 +261,7 @@ int main(int argc, char **argv)
     if (!glfwInit())
         return -1;
 
-    GLFWwindow *window = glfwCreateWindow(WIDTH, HEIGHT, "Red Square", NULL, NULL);
+    GLFWwindow *window = glfwCreateWindow(WIDTH, HEIGHT, "Mandelbrot Set", NULL, NULL);
     if (!window)
     {
         glfwTerminate();
@@ -275,13 +275,13 @@ int main(int argc, char **argv)
     display(window);
 
     // Loop until the user closes the window
-    while (!glfwWindowShouldClose(window))
-    {
-        // Poll for and process events
-        glfwPollEvents();
-    }
+    // while (!glfwWindowShouldClose(window))
+    // {
+    //     // Poll for and process events
+    //     glfwPollEvents();
+    // }
 
-    saveToPPM();
+    // saveToPPM();
 
     glfwTerminate();
     out.close();
